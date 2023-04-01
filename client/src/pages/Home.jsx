@@ -8,7 +8,7 @@ const Home = () => {
         axios.get("http://127.0.0.1:8000/api/users/logout")
         .then(res=> {
             console.log(res.data)
-            
+            localStorage.clear()
             navigate("/login")
         })
         .catch(err => console.log(err))

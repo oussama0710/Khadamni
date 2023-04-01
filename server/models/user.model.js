@@ -1,7 +1,8 @@
 const mongoose = require("mongoose")
 const bcrypt = require("bcrypt")
+const service = require("../models/service.model");
 
-const UserSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
     firstName: {
         type: String,
         required: [true, "First name is required"]
@@ -13,6 +14,7 @@ const UserSchema = new mongoose.Schema({
     email: {
         type: String,
         required: [true, "Email is required"],
+        unique: true,
         validate: {
             validator: val => /^([\w-\.]+@([\w-]+\.)+[\w-]+)?$/.test(val),
             message: "Please enter a valid email"
@@ -23,9 +25,11 @@ const UserSchema = new mongoose.Schema({
         required: [true, "Password is required"],
         minlength: [8, "Password must be 8 characters or longer"]
     },
-    image: {
-        type: String,
-    }
+    // image: {
+    //     type: String,
+    //     default: ""
+    // },
+    // favourites: service,
 
 }, { timestamps: true });
 
@@ -34,11 +38,11 @@ const UserSchema = new mongoose.Schema({
 // Get declare  an empty attribute = _confirmPassword
 // Set assign the value to the attribute
 
-UserSchema.virtual('confirmPassword').get(() => {
+userSchema.virtual('confirmPassword').get(() => {
     return this._confirmPassword
 }).set(value => this._confirmPassword = value)
 
-UserSchema.pre('validate', function (next) {
+userSchema.pre('validate', function (next) {
     console.log("inside password validation")
     console.log(this.password, "------" , this.confirmPassword)
     if (this.password !== this.confirmPassword) {
@@ -47,7 +51,7 @@ UserSchema.pre('validate', function (next) {
     next()
 }, { timestamps: true })
 
-UserSchema.pre('save', async function (next) {
+userSchema.pre('save', async function (next) {
     console.log("In hashing the password")
     try {
         const hashedPassword = await bcrypt.hash(this.password,10)
@@ -60,5 +64,5 @@ UserSchema.pre('save', async function (next) {
     next()
 })
 
-const User = mongoose.model("User", UserSchema)
-module.exports = User
+const user = mongoose.model("User", userSchema)
+module.exports = user
