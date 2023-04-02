@@ -42,6 +42,7 @@ module.exports = {
           res.status(201)
             .cookie("chat-app-user", userToken, { httpOnly: true })
             .json({ userFromDB, message: "login successful" });
+           
         }
       } catch (error) {
         res.status(401).json(error);
@@ -55,4 +56,22 @@ module.exports = {
     res.clearCookie("chat-app-user");
     res.json({ successMessage: "User logged out" });
   },
+  getAllUsers : async (req, res, next) => {
+    try {
+      const users  = await User.find({
+        //get all users except my user
+        _id:{ $ne:req.params.id }
+      }).select([
+        "email",
+        "firstName",
+        "lastName",
+        "avatarImage",
+        "_id"
+      ]);
+      return res.json(users);
+    } catch (err) {
+      next(err);
+    }
+  },
 };
+

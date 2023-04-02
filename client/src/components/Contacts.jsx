@@ -9,8 +9,9 @@ export default function Contacts({ contacts, currentUser, changeChat }) {
 
     useEffect(() => {
         if (currentUser) {
+          
             setCurrentUserImage(currentUser.avatarImage);
-            setCurrentUserName(currentUser.username);
+            setCurrentUserName(currentUser.firstName);
         }
     }, [currentUser]);
 
@@ -21,7 +22,7 @@ export default function Contacts({ contacts, currentUser, changeChat }) {
     return (
         <>
             {
-                currentUserImage && currentUserName && (
+                 currentUserName && (
                     <Container>
                         <div className="brand">
                             <img src={Logo} alt="logo" />
@@ -38,10 +39,10 @@ export default function Contacts({ contacts, currentUser, changeChat }) {
                                              key={contact._id}
                                               onClick={()=>changeCurrentChat(index,contact)}>
                                             <div className="avatar">
-                                                <img src={`data:image/svg+xml;base64,${contact.avatarImage}`} alt="avatar" />
+                                                <img src={`${contact.avatarImage}`} alt="avatar" />
                                             </div>
                                             <div className="username">
-                                                <h3>{contact.username}</h3>
+                                                <h3>{contact.firstName} {contact.lastName}</h3>
                                             </div>
                                         </div>
                                     )
@@ -50,7 +51,7 @@ export default function Contacts({ contacts, currentUser, changeChat }) {
                         </div>
                         <div className="current-user">
                         <div className="avatar">
-                                                <img src={`data:image/svg+xml;base64,${currentUserImage}`} alt="avatar" />
+                                                <img src={`${currentUserImage}`} alt="avatar" />
                                             </div>
                                             <div className="username">
                                                 <h2>{currentUserName}</h2>

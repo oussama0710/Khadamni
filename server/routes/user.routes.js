@@ -4,4 +4,5 @@ module.exports = (app) =>{
     app.post("/api/users/register", userController.registerUser)
     app.post("/api/users/login" , userController.loginUser)
     app.get("/api/users/logout" , userController.logoutUser)
+    app.get("/api/auth/allUsers/:id", userController.getAllUsers);
 }

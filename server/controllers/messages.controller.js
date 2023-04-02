@@ -1,4 +1,4 @@
-const messageModel = require("../models/messageModel");
+const messageModel = require("../models/message.model");
 
 module.exports.addMessage = async (req, res, next) => {
     try {

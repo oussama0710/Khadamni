@@ -25,6 +25,7 @@ export default function Chats() {
         navigate("/login");
       }
       else {
+        console.log(localStorage.getItem('chat-app-user'));
         setCurrentUser(await JSON.parse(localStorage.getItem('chat-app-user')));
         setIsLoaded(true);
       }
@@ -42,12 +43,10 @@ export default function Chats() {
   useEffect( () => {
     const getCurrentUser = async()=>{
       if( currentUser)  {
-      if(currentUser.isAvatarImageSet){
+      
         const data = await  axios.get(`${allUsersRoute}/${currentUser._id}`);
         setContacts(data.data);
-      } else{
-        navigate('/setAvatar');
-      }
+
     }
     }
       getCurrentUser();

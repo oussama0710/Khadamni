@@ -25,11 +25,10 @@ const userSchema = new mongoose.Schema({
         required: [true, "Password is required"],
         minlength: [8, "Password must be 8 characters or longer"]
     },
-    // image: {
-    //     type: String,
-    //     default: ""
-    // },
-    // favourites: service,
+    avatarImage: {
+        type: String,
+        default: "https://cdn-icons-png.flaticon.com/512/186/186313.png"
+    }
 
 }, { timestamps: true });
 
