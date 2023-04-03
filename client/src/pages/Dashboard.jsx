@@ -6,12 +6,7 @@ import AddService from "../components/AddService";
 const Dashboard = () => {
     return (
         <div>
-            <BrowserRouter>
-                <Routes>
-                    <Route path="/services" element={<Services />} />
-                    <Route path="/services/add" element={<AddService />} />
-                </Routes>
-            </BrowserRouter>
+            <AddService/>
         </div>
     );
 };
