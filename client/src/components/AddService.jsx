@@ -34,7 +34,7 @@ export default function AddService() {
     axios.put()
   }
   return (
-    <form onSubmit={}>
+    <form onSubmit={handleSubmit}>
       <Paper elevation={3} sx={{ marginRight: "15%", marginLeft: "15%" }}>
         <Box sx={{ padding: 5 }}>
           <Typography variant="h6" gutterBottom sx={{ paddingBottom: 5 }}>
