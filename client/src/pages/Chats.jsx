@@ -62,7 +62,7 @@ export default function Chats() {
         <Contacts contacts={contacts} currentUser={currentUser}  changeChat={handleChatChange}/>
         { isLoaded &&
           currentChat === undefined ?
-           <Welcome currentUser={currentUser}/> : 
+           <Welcome currentUser={currentUser}/> :
           <ChatContainer currentChat={currentChat} socket={socket} currentUser={currentUser} />
         }
       </div>

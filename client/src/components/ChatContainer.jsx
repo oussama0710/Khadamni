@@ -54,7 +54,7 @@ export default function ChatContainer({ currentChat, currentUser, socket }) {
         });
       })
     }
-  }, []);
+  }, );
 
   useEffect(()=>{
     arrivalMessage && setMessages((prev)=>[...prev,arrivalMessage]);

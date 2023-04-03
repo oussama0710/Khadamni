@@ -28,8 +28,12 @@ const userSchema = new mongoose.Schema({
     avatarImage: {
         type: String,
         default: "https://cdn-icons-png.flaticon.com/512/186/186313.png"
-    }
-
+    },
+    services:[{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "service",
+    default:[]
+}]
 }, { timestamps: true });
 
 

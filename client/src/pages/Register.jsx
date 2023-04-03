@@ -15,7 +15,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { registerRoute } from '../utils/APIRoutes';
-import { ToastContainer, toast } from "react-toastify"
+import { toast } from "react-toastify"
 function Copyright(props) {
   return (
     <Typography

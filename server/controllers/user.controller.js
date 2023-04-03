@@ -73,5 +73,12 @@ module.exports = {
       next(err);
     }
   },
+  //* Update User to add Service OR an Avatar
+  updateUser: (request, response) =>{
+  const user = new User(req.body);
+  user.findOneAndUpdate({_id: request.params.id}, request.body, {new: true, runValidators: true})
+  .then((updatedUser)=>{response.json(updatedUser)})
+  .catch((err)=>{response.json({ message: 'Something went wrong', error: err })})
+}
 };
 
