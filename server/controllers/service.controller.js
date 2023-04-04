@@ -1,12 +1,10 @@
-const service = require("../models/services.model");
+const service = require("../models/service.model");
 
 //Create ONE
-module.exports.addNewService = (request, response) => {
-  service.create(request.body)
-    .then((newlyCreatedService) => {
-      response.json(newlyCreatedService);
-    })
-    .catch((err) => {
-      response.json({ message: "Something went wrong", error: err });
-    });
+module.exports = {
+  addNewService: (request, response) => {
+    service.create(request.body)
+      .then(newlyCreatedService => response.json({newlyCreatedService}))
+      .catch(err=>response.status(400).json(err.errors))
+  },
 };

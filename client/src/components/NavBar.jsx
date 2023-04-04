@@ -1,4 +1,7 @@
 import { AppBar, Box, styled, alpha } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import {Button} from "@mui/material";
+import { BiPowerOff } from "react-icons/bi";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
@@ -12,8 +15,9 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
-
+import Logout from "./Logout";
 import React from "react";
+
 
 const Search = styled("div")(({ theme }) => ({
     position: "relative",
@@ -55,7 +59,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
+
+
+
 const NavBar = () => {
+    const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -158,7 +166,7 @@ const NavBar = () => {
     );
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1, top:'0', position:'fixed', width:'100%' }}>
             <AppBar position="static">
                 <Toolbar>
                     {/*                     <IconButton
@@ -207,6 +215,7 @@ const NavBar = () => {
                                 <NotificationsIcon />
                             </Badge>
                         </IconButton>
+                        <button><Logout/>Log Out</button>
                         <IconButton
                             size="large"
                             edge="end"
@@ -219,6 +228,7 @@ const NavBar = () => {
                             <AccountCircle />
                         </IconButton>
                     </Box>
+
                     <Box sx={{ display: { xs: "flex", md: "none" } }}>
                         <IconButton
                             size="large"
