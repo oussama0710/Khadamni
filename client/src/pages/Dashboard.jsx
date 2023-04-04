@@ -6,7 +6,7 @@ import AddService from "../components/AddService";
 const Dashboard = () => {
     return (
         <div>
-            <AddService/>
+            <AddService />
         </div>
     );
 };

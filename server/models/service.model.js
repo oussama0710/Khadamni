@@ -7,7 +7,7 @@ const ServiceSchema = new mongoose.Schema(
       required: true,
       minlength: [3, "Title must be 3 characters or longer"]
     },
-    Category: {
+    category: {
       type: String,
       required: true,
     },
@@ -18,7 +18,7 @@ const ServiceSchema = new mongoose.Schema(
     },
     photos: {
       type: Array,
-      required: true,
+      
     },
   },
   { timestamps: true }

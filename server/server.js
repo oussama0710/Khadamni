@@ -26,6 +26,8 @@ require("./config/mongoose.config")(DB)
 // import routes
 require("./routes/user.routes")(app)
 require("./routes/messages.routes")(app)
+require("./routes/service.routes")(app)
+
 // to run the server
 const server = app.listen(8000, () =>
   console.log('The server is all fired up on port 8000')

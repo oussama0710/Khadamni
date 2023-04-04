@@ -1,5 +1,5 @@
-const serviceController = require ("../controllers/service.controller")
+const serviceController = require("../controllers/service.controller")
 
 module.exports = (app) =>{
-    app.post("/api/add/service", serviceController.registerUser)
+    app.post("/api/add/service", serviceController.addNewService);
 }

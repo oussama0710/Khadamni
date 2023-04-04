@@ -78,7 +78,19 @@ module.exports = {
   const user = new User(req.body);
   user.findOneAndUpdate({_id: request.params.id}, request.body, {new: true, runValidators: true})
   .then((updatedUser)=>{response.json(updatedUser)})
-  .catch((err)=>{response.json({ message: 'Something went wrong', error: err })})
-}
+  .catch((err)=>response.status(400).json(err))
+  
+},
+getOneUser: async (req, res, next) => {
+  try {
+    const users  = await User.find(
+      //get all users except my user
+      {_id:req.params.id}
+    )
+    return res.json(users);
+  } catch (err) {
+    next(err);
+  }
+},
 };
 
