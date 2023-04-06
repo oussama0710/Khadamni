@@ -15,6 +15,8 @@ import UploadFileIcon from "@mui/icons-material/UploadFile";
 import Button from "@mui/material/Button";
 import axios from "axios";
 
+
+
 export default function AddService() {
     const id= JSON.parse(localStorage.getItem('chat-app-user'))._id
     const navigate= useNavigate()
@@ -27,10 +29,10 @@ export default function AddService() {
         services:[],
       })
   const [newService, setNewService] = React.useState({
-    category: "",
-    title: "",
-    description: "",
-    photos: [],
+    category : "",
+    title : "",
+    description : "",
+    photos : [],
   });
   
   useEffect(()=>
@@ -40,13 +42,14 @@ export default function AddService() {
         {
             console.log(res.data[0])
             setUpdatedUser(res.data[0])
-            setUpdatedUser({...updatedUser, services:[...updatedUser.services,newService]})
+            
         })
         .catch(err=>console.log(err))
     },[newService])
   
   const handleChange = (event) => {
     setNewService({ ...newService, [event.target.name]: event.target.value });
+    console.log(newService);
   };
 
   const categories = [
@@ -59,13 +62,14 @@ export default function AddService() {
   ];
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+    setUpdatedUser({...updatedUser, services:[...updatedUser.services,newService]})
     axios.post("http://localhost:8000/api/add/service", newService)
       .then((res) => {
         console.log("✅✅✅✅Client Success ✅✅✅✅", res.data);
 
       })
       .catch((err) => {console.log(err)});
+      
       axios.put("http://localhost:8000/api/user/update/"+id, updatedUser)
       .then(res=>
           {
@@ -121,6 +125,7 @@ export default function AddService() {
               <TextField
                 id="outlined-multiline-static"
                 label="Description"
+                name="description"
                 multiline
                 fullWidth
                 rows={4}
@@ -140,16 +145,17 @@ export default function AddService() {
             </Grid>
             <Grid item xs={12} sm={4}>
               <FormControl fullWidth size="small">
-                <InputLabel id="demo-simple-select-label">Age</InputLabel>
+                <InputLabel id="demo-simple-select-label">Category</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value=""
-                  label="Age"
+                  value={newService.category}
+                  label="Category"
+                  name="category"
                   onChange={handleChange}
                 >
-                  {categories.map((item) => (
-                    <MenuItem value={item}>{item}</MenuItem>
+                  {categories.map((item, index) => (
+                    <MenuItem value={item} key={index}>{item}</MenuItem>
                   ))}
                 </Select>
               </FormControl>
