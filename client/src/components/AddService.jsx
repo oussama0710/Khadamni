@@ -10,46 +10,37 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import FormGroup from "@mui/material/FormGroup";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import Button from "@mui/material/Button";
 import axios from "axios";
 
-
-
 export default function AddService() {
-    const id= JSON.parse(localStorage.getItem('chat-app-user'))._id
-    const navigate= useNavigate()
-    const [updatedUser, setUpdatedUser]= useState({
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-        services:[],
-      })
+  const user = JSON.parse(localStorage.getItem("chat-app-user"));
+  const id = user._id
+  const navigate = useNavigate();
+
+  const [serviceProvider,setServiceProvider ]= useState({
+    // firstName:"",
+    // lastName:"",
+    // email:"",
+    // password:"",
+    // services:[],
+    // avatarImage:""
+    email:user.email, 
+    firstName:user.firstName,
+    lastName:user.lastName,
+    password:user.password,
+    avatarImage:user.avatarImage,
+    services:user.services
+  })
   const [newService, setNewService] = React.useState({
-    category : "",
-    title : "",
-    description : "",
-    photos : [],
+    category: "",
+    title: "",
+    description: "",
   });
-  
-  useEffect(()=>
-    {
-        axios.get("http://localhost:8000/api/auth/OneUser/"+id)
-        .then(res=>
-        {
-            console.log(res.data[0])
-            setUpdatedUser(res.data[0])
-            
-        })
-        .catch(err=>console.log(err))
-    },[newService])
-  
   const handleChange = (event) => {
     setNewService({ ...newService, [event.target.name]: event.target.value });
-    console.log(newService);
+    
   };
 
   const categories = [
@@ -60,23 +51,34 @@ export default function AddService() {
     "Social media",
     "Game developper",
   ];
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setUpdatedUser({...updatedUser, services:[...updatedUser.services,newService]})
-    axios.post("http://localhost:8000/api/add/service", newService)
+    console.log(newService);
+    console.log(user)
+    // setServiceProvider({
+      // email:user.email, 
+      // firstName:user.firstName,
+      // lastName:user.lastName,
+      // password:user.password,
+      // avatarImage:user.avatarImage,
+      // services:user.services
+    // })
+    
+    const service = serviceProvider.services
+    console.log(service)
+    service.push(newService)
+    setServiceProvider({...serviceProvider, services:service});
+    // setServiceProvider({...serviceProvider,services:[serviceProvider.services.shift()]});
+    
+    console.log(serviceProvider);
+    
+    await axios.put("http://localhost:8000/api/user/update/" + id,serviceProvider)
       .then((res) => {
+        console.log(res);
         console.log("✅✅✅✅Client Success ✅✅✅✅", res.data);
-
       })
-      .catch((err) => {console.log(err)});
+      .catch((err) => console.log(err));
       
-      axios.put("http://localhost:8000/api/user/update/"+id, updatedUser)
-      .then(res=>
-          {
-          console.log(res.data)
-          navigate("/")
-          })
-      .catch(err=>console.log(err))
   };
   return (
     <form onSubmit={handleSubmit}>
@@ -155,7 +157,9 @@ export default function AddService() {
                   onChange={handleChange}
                 >
                   {categories.map((item, index) => (
-                    <MenuItem value={item} key={index}>{item}</MenuItem>
+                    <MenuItem value={item} key={index}>
+                      {item}
+                    </MenuItem>
                   ))}
                 </Select>
               </FormControl>

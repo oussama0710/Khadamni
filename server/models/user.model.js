@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 const bcrypt = require("bcrypt")
 const service = require("../models/service.model");
-
+const ServiceSchema = require("../models/service.model");
 const userSchema = new mongoose.Schema({
     firstName: {
         type: String,
@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         required: [true, "Email is required"],
-        unique: true,
+        
         validate: {
             validator: val => /^([\w-\.]+@([\w-]+\.)+[\w-]+)?$/.test(val),
             message: "Please enter a valid email"
@@ -30,9 +30,8 @@ const userSchema = new mongoose.Schema({
         default: "https://cdn-icons-png.flaticon.com/512/186/186313.png"
     },
     services:[{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "service",
-    default:[]
+    type: ServiceSchema,
+    default: () => ({})
 }]
 }, { timestamps: true });
 

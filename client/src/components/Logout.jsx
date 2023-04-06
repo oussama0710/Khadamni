@@ -7,7 +7,13 @@ export default function Logout() {
   const navigate = useNavigate();
   const handleClick =  () => {
 
-    localStorage.clear();
+    
+    axios.get("/api/users/logout")
+    .then(res=>{
+      console.log("Use Logged out ")
+  })
+  .catch(err=>console.log(err))
+  localStorage.clear();
     navigate("/login");
   };
 

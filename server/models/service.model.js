@@ -9,7 +9,7 @@ const ServiceSchema = new mongoose.Schema(
     },
     category: {
       type: String,
-      
+      required: true,
     },
     description: {
       type: String,
@@ -25,4 +25,4 @@ const ServiceSchema = new mongoose.Schema(
 );
 // create a constructor function for our model and store in variable 'User'
 const service = mongoose.model("service", ServiceSchema);
-module.exports = service;
+module.exports = ServiceSchema;

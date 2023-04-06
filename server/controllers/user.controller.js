@@ -74,19 +74,16 @@ module.exports = {
     }
   },
   //* Update User to add Service OR an Avatar
-  updateUser: (request, response) =>{
-  const user = new User(req.body);
-  user.findOneAndUpdate({_id: request.params.id}, request.body, {new: true, runValidators: true})
+  updateUser:(request, response) =>{
+  User.findOneAndUpdate({_id:request.params.id}, request.body ,{new: true, runValidators: true})
   .then((updatedUser)=>{response.json(updatedUser)})
   .catch((err)=>response.status(400).json(err))
   
 },
+
 getOneUser: async (req, res, next) => {
   try {
-    const users  = await User.find(
-      //get all users except my user
-      {_id:req.params.id}
-    )
+    const users  = await User.find({_id:req.params.id})
     return res.json(users);
   } catch (err) {
     next(err);
