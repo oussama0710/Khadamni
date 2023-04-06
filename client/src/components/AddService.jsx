@@ -165,33 +165,36 @@ export default function AddService() {
               </FormControl>
             </Grid>
 
-            <Grid item xs={12} sm={2}>
-              <InputLabel
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  fontWeight: 700,
-                }}
-              >
-                Upload photos
-              </InputLabel>
-            </Grid>
-            <Grid item xs={12} sm={4}>
-              <Button>
-                <UploadFileIcon />
-              </Button>
-            </Grid>
-            <Grid item xs={12} sm={6} />
-            <Grid item xs={12} sm={5} />
-            <Grid item xs={12} sm={4}>
-              <button variant="contained" sx={{ color: "#ff781f" }}>
-                Save
-              </button>
-            </Grid>
-            <Grid item xs={12} sm={5} />
-          </Grid>
-        </Box>
-      </Paper>
-    </form>
-  );
+                        <Grid item xs={12} sm={2}>
+                            <InputLabel
+                                sx={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    fontWeight: 700,
+                                }}
+                            >
+                                Upload photos
+                            </InputLabel>
+                        </Grid>
+                        <Grid item xs={12} sm={4}>
+                            <Button>
+                                <UploadFileIcon />
+                            </Button>
+                        </Grid>
+                        <Grid item xs={12} sm={6} />
+                        <Grid item xs={12} sm={5} />
+                        <Grid item xs={12} sm={4}>
+                            <button
+                                variant="contained"
+                                sx={{ color: "#ff781f" }}
+                            >
+                                Save
+                            </button>
+                        </Grid>
+                        <Grid item xs={12} sm={5} />
+                    </Grid>
+                </Box>
+            </Paper>
+        </form>
+    );
 }
