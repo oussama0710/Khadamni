@@ -42,7 +42,6 @@ module.exports = {
           res.status(201)
             .cookie("chat-app-user", userToken, { httpOnly: true })
             .json({ userFromDB, message: "login successful" });
-           
         }
       } catch (error) {
         res.status(401).json(error);
@@ -56,12 +55,25 @@ module.exports = {
     res.clearCookie("chat-app-user");
     res.json({ successMessage: "User logged out" });
   },
-  getAllUsers : async (req, res, next) => {
+  getAllUsersForUser : async (req, res, next) => {
     try {
-      const users  = await User.find({
-        //get all users except my user
-        _id:{ $ne:req.params.id }
-      }).select([
+
+      const users  = await User.find({ services: { $exists: true, $not: { $size: 0 } } }).select([
+        "email",
+        "firstName",
+        "lastName",
+        "avatarImage",
+        "_id"
+      ]);
+      return res.json(users);
+    } catch (err) {
+      next(err);
+    }
+  },
+  getAllUsersForServiceProvider : async (req, res, next) => {
+    try {
+
+      const users  = await User.find({ services: { $exists: false, $ne: { $size: 0 } } }).select([
         "email",
         "firstName",
         "lastName",
@@ -74,20 +86,61 @@ module.exports = {
     }
   },
   //* Update User to add Service OR an Avatar
-  updateUser:(request, response) =>{
-  User.findOneAndUpdate({_id:request.params.id}, request.body ,{new: true, runValidators: true})
+  updateUser: (request, response) =>{
+  //const user = new User(req.body);
+  User.findOneAndUpdate({_id: request.params.id}, request.body, {new: true, runValidators: true})
   .then((updatedUser)=>{response.json(updatedUser)})
   .catch((err)=>response.status(400).json(err))
   
 },
-
-getOneUser: async (req, res, next) => {
+  getOneUser: async (req, res, next) => {
   try {
-    const users  = await User.find({_id:req.params.id})
+    const users  = await User.find(
+      //get all users except my user
+      {_id:req.params.id}
+    )
     return res.json(users);
   } catch (err) {
     next(err);
   }
 },
-};
+getUsers: async (req, res, next) => {
+  try {
+    const users  = await User.find()
+    return res.json(users);
+  } catch (err) {
+    next(err);
+  }
+},
+findOneUser:(req,res)=>
+{
+    User.findById(req.params.id)
+    .then(oneUser=>res.json(oneUser))
+    .catch(err=>res.status(400).json(err))
+},
 
+/* findServices:(req,res)=>
+{
+    User.find({services: })
+    .then(oneUser=>res.json(oneUser))
+    .catch(err=>res.status(400).json(err))
+},
+ */
+listByCategory : async (req, res) => {
+  const { category } = req.params;
+
+  try {
+    const users = await User.find({ services: { $exists: true, $not: { $size: 0 } } }).populate('services');
+
+    const services = users.reduce((acc, user) => {
+      const filteredServices = user.services.filter(service => service.category === category);
+      return acc.concat(filteredServices);
+    }, []);
+
+    res.json(services);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server error');
+  }
+}
+}

@@ -27,13 +27,13 @@ const Dashboard = () => {
     const splitLocation = pathname.split("/");
 
     return (
-        <Box sx={{ display: "flex" }}>
+        <Box sx={{ display: "flex"}}>
             {/* <Link to="/dashboard/services">Services</Link>
             <Link to="/dashboard/add">Add Service</Link> */}
             <Box
                 sx={{
                     width: "100%",
-                    maxWidth: 360,
+                    maxWidth: 250,
                     bgcolor: "background.paper",
                 }}
             >

@@ -2,7 +2,7 @@ import styled from "styled-components"
 import { useState, useEffect , useRef} from 'react'
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { allUsersRoute, host } from "../utils/APIRoutes";
+import { allUsersRoute, host,allServiceProvidersRoute } from "../utils/APIRoutes";
 import Contacts from "../components/Contacts";
 import Welcome from "../components/Welcome";
 import ChatContainer from "../components/ChatContainer";
@@ -42,11 +42,16 @@ export default function Chats() {
 
   useEffect( () => {
     const getCurrentUser = async()=>{
-      if( currentUser)  {
+      if( currentUser.services.length ===0 || currentUser.services === 'undefined')  {
       
         const data = await  axios.get(`${allUsersRoute}/${currentUser._id}`);
         setContacts(data.data);
-
+        console.log(currentUser)
+    }
+    else{
+      const data = await  axios.get(`${allServiceProvidersRoute}/${currentUser._id}`);
+        setContacts(data.data);
+        console.log(currentUser)
     }
     }
       getCurrentUser();

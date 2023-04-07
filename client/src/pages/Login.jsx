@@ -20,6 +20,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 function Copyright(props) {
     return (
+
       <Typography variant="body2" color="text.secondary" align="center" {...props}>
         {'Copyright © '}
         <Link color="inherit" href="https://mui.com/">
@@ -34,7 +35,9 @@ function Copyright(props) {
 
 const Login = () => {
   const navigate = useNavigate();
-
+  if (localStorage.getItem('chat-app-user')){
+    navigate("/")
+  }
   const [values, setValues] = useState({
     email: "",
     password: ""
@@ -88,6 +91,7 @@ const Login = () => {
   
   return (
     <>
+    
       <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />

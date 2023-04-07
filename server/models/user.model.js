@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 const bcrypt = require("bcrypt")
-const service = require("../models/service.model");
-const ServiceSchema = require("../models/service.model");
+
+const {ServiceSchema, service} = require("../models/service.model");
 const userSchema = new mongoose.Schema({
     firstName: {
         type: String,

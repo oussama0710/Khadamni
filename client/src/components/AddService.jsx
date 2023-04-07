@@ -16,76 +16,49 @@ import axios from "axios";
 
 export default function AddService() {
   const user = JSON.parse(localStorage.getItem("chat-app-user"));
-  const id = user._id
+  const id = user._id;
   const navigate = useNavigate();
 
-  const [serviceProvider,setServiceProvider ]= useState({
-    // firstName:"",
-    // lastName:"",
-    // email:"",
-    // password:"",
-    // services:[],
-    // avatarImage:""
-    email:user.email, 
-    firstName:user.firstName,
-    lastName:user.lastName,
-    password:user.password,
-    avatarImage:user.avatarImage,
-    services:user.services
-  })
+  const [serviceProvider, setServiceProvider] = useState({
+    email: user.email,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    password: user.password,
+    avatarImage: user.avatarImage,
+    services: user.services,
+  });
+
   const [newService, setNewService] = React.useState({
     category: "",
     title: "",
     description: "",
+    userName: user.firstName + user.lastName,
+    userAvatar: user.avatarImage,
   });
+
   const handleChange = (event) => {
     setNewService({ ...newService, [event.target.name]: event.target.value });
-    
   };
 
-  const categories = [
-    "Audio Visual",
-    "Graphic Designer",
-    "Web/Mobile development",
-    "SEO",
-    "Social media",
-    "Game developper",
-  ];
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(newService);
-    console.log(user)
-    // setServiceProvider({
-      // email:user.email, 
-      // firstName:user.firstName,
-      // lastName:user.lastName,
-      // password:user.password,
-      // avatarImage:user.avatarImage,
-      // services:user.services
-    // })
-    
-    const service = serviceProvider.services
-    console.log(service)
-    service.push(newService)
-    setServiceProvider({...serviceProvider, services:service});
-    // setServiceProvider({...serviceProvider,services:[serviceProvider.services.shift()]});
-    
-    console.log(serviceProvider);
-    
-    await axios.put("http://localhost:8000/api/user/update/" + id,serviceProvider)
+    const service = serviceProvider.services;
+    service.push(newService);
+    setServiceProvider({ ...serviceProvider, services: service });
+
+    await axios
+      .put("http://localhost:8000/api/user/update/" + id, serviceProvider)
       .then((res) => {
-        console.log(res);
         console.log("✅✅✅✅Client Success ✅✅✅✅", res.data);
       })
       .catch((err) => console.log(err));
-      
   };
   return (
     <form onSubmit={handleSubmit}>
       <Paper elevation={3} sx={{ marginRight: "15%", marginLeft: "15%" }}>
         <Box sx={{ padding: 5 }}>
           <Typography variant="h6" gutterBottom sx={{ paddingBottom: 5 }}>
-            Krunch Media
+            Add Service
           </Typography>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={2}>
@@ -156,45 +129,57 @@ export default function AddService() {
                   name="category"
                   onChange={handleChange}
                 >
-                  {categories.map((item, index) => (
-                    <MenuItem value={item} key={index}>
-                      {item}
+                  
+                    <MenuItem value="gameDevloper" >
+                      Game developer
                     </MenuItem>
-                  ))}
+                    <MenuItem value="socialMedia" >
+                    Social media
+                    </MenuItem>
+                    <MenuItem value="seo" >
+                    SEO
+                    </MenuItem>
+                    <MenuItem value="web-mobileDevelopment" >
+                    Web/Mobile development
+                    </MenuItem>
+                    <MenuItem value="audioVisual" >
+                    Audio Visual
+                    </MenuItem>
+                    <MenuItem value="graphicDesigner" >
+                    Graphic Designer
+                    </MenuItem>
+                  
                 </Select>
               </FormControl>
             </Grid>
 
-                        <Grid item xs={12} sm={2}>
-                            <InputLabel
-                                sx={{
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    fontWeight: 700,
-                                }}
-                            >
-                                Upload photos
-                            </InputLabel>
-                        </Grid>
-                        <Grid item xs={12} sm={4}>
-                            <Button>
-                                <UploadFileIcon />
-                            </Button>
-                        </Grid>
-                        <Grid item xs={12} sm={6} />
-                        <Grid item xs={12} sm={5} />
-                        <Grid item xs={12} sm={4}>
-                            <button
-                                variant="contained"
-                                sx={{ color: "#ff781f" }}
-                            >
-                                Save
-                            </button>
-                        </Grid>
-                        <Grid item xs={12} sm={5} />
-                    </Grid>
-                </Box>
-            </Paper>
-        </form>
-    );
+            <Grid item xs={12} sm={2}>
+              <InputLabel
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  fontWeight: 700,
+                }}
+              >
+                Upload photos
+              </InputLabel>
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <Button>
+                <UploadFileIcon />
+              </Button>
+            </Grid>
+            <Grid item xs={12} sm={6} />
+            <Grid item xs={12} sm={5} />
+            <Grid item xs={12} sm={4}>
+              <button variant="contained" sx={{ color: "#ff781f" }}>
+                Save
+              </button>
+            </Grid>
+            <Grid item xs={12} sm={5} />
+          </Grid>
+        </Box>
+      </Paper>
+    </form>
+  );
 }

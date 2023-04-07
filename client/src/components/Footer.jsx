@@ -44,6 +44,11 @@ const Footer = () =>{
                   Social Media
                 </a>
               </p>
+              <p>
+                <a href='#!' className='text-reset'>
+                  Games Development
+                </a>
+              </p>
             </MDBCol>
 
             <MDBCol md='3' lg='2' xl='2' className='mx-auto mb-4'>

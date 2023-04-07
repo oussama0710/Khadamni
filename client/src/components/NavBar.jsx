@@ -1,6 +1,6 @@
 import { AppBar, Box, styled, alpha } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import {Button} from "@mui/material";
+import { Button } from "@mui/material";
 import { BiPowerOff } from "react-icons/bi";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
@@ -59,9 +59,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-
-
-
 const NavBar = () => {
     const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -104,8 +101,12 @@ const NavBar = () => {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+            <MenuItem onClick={()=>navigate(`/dashboard`)}>Profile</MenuItem>
+            <MenuItem onClick={() => {
+                localStorage.clear();
+                handleMenuClose()
+                navigate("/login")
+            }}>Log out</MenuItem>
         </Menu>
     );
 
@@ -166,7 +167,7 @@ const NavBar = () => {
     );
 
     return (
-        <Box sx={{ flexGrow: 1, top:'0', position:'fixed', width:'100%' }}>
+        <Box sx={{ flexGrow: 1, top: '0', position: 'sticky', width: '100%' }}>
             <AppBar position="static">
                 <Toolbar>
                     {/*                     <IconButton
@@ -215,7 +216,6 @@ const NavBar = () => {
                                 <NotificationsIcon />
                             </Badge>
                         </IconButton>
-                        <button><Logout/>Log Out</button>
                         <IconButton
                             size="large"
                             edge="end"
